@@ -1,4 +1,5 @@
 import requests
+from send_email import send_email
 
 url = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=8559cc8f40fc43a1a7e4d254130a82ea"
 
@@ -6,13 +7,18 @@ url = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=8559cc8f40
 r = requests.get(url)
 content = r.json()
 
-# Display total number of articles
-print(f"\nShowing {content['totalResults']} articles...\n")
+# Create a message to be sent through email
+message = f"""\
+Subject: News Update
+\nShowing {content['totalResults']} articles...
+"""
 
-# Display the title, author, url and description for each article
 for i in content["articles"]:
-    print(i["title"])
-    print(i["author"])
-    print(i["url"])
-    print(i["description"])
-    print()
+    # Include every articles title, author, url, and description
+    message += "\n" + i["title"]
+    message += "\n" + i["author"]
+    message += "\n" + i["url"]
+    message += "\n" + i["description"] + "\n"
+
+# Encode to utf-8 and send the email
+send_email(message.encode('utf-8'))
