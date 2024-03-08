@@ -13,12 +13,32 @@ Subject: News Update
 \nShowing {content['totalResults']} articles...
 """
 
+# Include every articles title, author, url, and description
 for i in content["articles"]:
-    # Include every articles title, author, url, and description
-    message += "\n" + i["title"]
-    message += "\n" + i["author"]
-    message += "\n" + i["url"]
-    message += "\n" + i["description"] + "\n"
+
+    # Check to see if a title exists
+    if i["title"] is not None:
+        message += "\n" + i["title"]
+    else:
+        message += "\n" + "*Title not found*"
+
+    # Check to see if an author exists
+    if i["title"] is not None:
+        message += "\n" + i["author"]
+    else:
+        message += "\n" + "*Title not found*"
+
+    # Check to see if an url exists
+    if i["title"] is not None:
+        message += "\n" + i["url"]
+    else:
+        message += "\n" + "*Title not found*"
+
+    # Check to see if a description exists
+    if i["title"] is not None:
+        message += "\n" + i["description"] + "\n"
+    else:
+        message += "\n" + "*Title not found*"
 
 # Encode to utf-8 and send the email
 send_email(message.encode('utf-8'))
